@@ -2,15 +2,20 @@
 It's a simple voice model something like AmazonAlexa
 
 # Voice Assistant in Python 🎙️
-
 This is a simple voice assistant project built using Python.
 
 ## Features:
-- Opens websites and apps via voice
-- Speaks replies using gTTS
-- Plays songs from predefined library
-- Uses GeminiPro for responses
-- Can be extended with Spotify/YT APIs
+- Opens websites via voice.
+- Opens system apps via voice.
+- Speaks replies using gTTS(works online, pyttsx3 can also be used which works offline also).
+- Plays songs from predefined musicLibrary.
+- Uses Gemini-2.5-flash for responses.
+- Can be extended with Spotify/YT APIs but here pywhatkit is used.4
+- Latest headlines.
+
+## API's used:
+News API from- https://newsapi.org/
+Google Gemini- https://aistudio.google.com (HuggingFace API's can also be used, but the implementation would be a bit different for that)
 
 ## How to run:
 1. Clone the repo
