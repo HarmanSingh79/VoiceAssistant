@@ -1,6 +1,5 @@
 import speech_recognition as sr 
 import webbrowser
-import pyttsx3
 import musicLibrary
 import requests
 from gtts import gTTS
@@ -9,15 +8,7 @@ import os
 import google.generativeai as genai
 import pywhatkit as kit
 
-
-recognizer=sr.Recognizer()
-engine=pyttsx3.init()
-newsapi="75c0f0543973487d93aef07ce3896fd9"
-
-def speak_old(text):
-    engine.say(text)
-    engine.runAndWait()
-
+#voice model speaks
 def speak(text):
     tts=gTTS(text)
     tts.save("temp.mp3")
@@ -30,6 +21,7 @@ def speak(text):
     pygame.mixer.music.unload()
     os.remove("temp.mp3")
 
+#plays song using pywhatkit on YouTube 
 def play_song(song):
     try:
         speak(f"Playing {song} on YouTube")
@@ -37,61 +29,17 @@ def play_song(song):
     except:
         speak("Sorry, I couldn't play the song.")
 
-#it's for chatgpt api
-# def aiProcess(command):
-#     client=OpenAI(api_key="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")
+newsapi="news_api_key" #create from newsAPI
 
-# completion=client.chat.completions.create(
-#     model="gpt-4.1",
-#     messages=[
-#         {"role":"system","content":"You are a virtual assistant named Jarvis skilled in genral tasks like Alexa and Google Cloud.Give short responses please"},
-#         {"role":"user","content":command}
-#     ]
-# )
-# return(completion.choices[0].message)
-
-#By Gemini API
-Google_API="AIzaSyBzrEgqhf89DWqfvGSbGZQWrLeH_KPrwEs"
+#for simple questions (used in else statement)
+Google_API="YOUR_API_KEY" #created from google
 genai.configure(api_key=Google_API)
 def aiProcess(command):
     model=genai.GenerativeModel("gemini-2.5-flash")
     response=model.generate_content(command)
     return response.text
-# for m in genai.list_models():
-#     print(m.name)
 
-
-#by huggingface api
-# API_KEY = "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"
-# def aiProcess(command):
-#     API_URL = "https://api-inference.huggingface.co/models/facebook/blenderbot-400M-distill"  # or another chatbot model
-#     headers = {
-#         "Authorization": f"Bearer {API_KEY}"
-#     }
-#     payload = {
-#         "inputs": command
-#     }
-#     response = requests.post(API_URL, headers=headers, json=payload)
-
-#     print("Status:",response.status_code)
-#     print("Response:",response.text)
-    
-#     if response.status_code == 200:
-        
-#         # Extracting text depending on model output format
-#         try:
-#             result = response.json()
-#             if isinstance(result,list):
-#                 return result[0]
-#             else:
-#                 return str(result)
-#         except Exception as e:
-#             return f"Parsing Error:{e}"
-#     else:
-#         return f"Error: {response.status_code} - {response.text}"
-
-
-#for opening any application
+#for opening any application(add the applications according to your requirement)
 def open_application(app_name):
     if "chrome" in app_name:
         os.system("start chrome")
@@ -109,6 +57,7 @@ def open_application(app_name):
         speak("sorry, i'm unable to open it!")
 
 
+#for opening websites directly on browser
 def processCommand(c):
     if "open google" in c.lower():
         webbrowser.open("https://www.google.com")
@@ -118,11 +67,13 @@ def processCommand(c):
         webbrowser.open("https://www.instagram.com")
     elif "open linkedin" in c.lower():
         webbrowser.open("https://www.linkedin.com")
-    #playing yt videos by importing musicLibrary
+        
+    #playing yt videos by importing musicLibrary(add the music video links according to requirement
     elif c.lower().startswith("play"):
         song=c.lower().split(" ")[1]
         link=musicLibrary.music[song]
         webbrowser.open(link)
+        
     #playing music by using pywhatkit
     elif "start music" in c.lower():
         song=c.lower().replace("start music","").strip()
@@ -140,9 +91,6 @@ def processCommand(c):
         app_name=c.lower().replace("open","").strip()
         open_application(app_name)
     else:
-        # #openAI will handle now
-        # output=aiProcess(c)
-        # speak(output)
         output=aiProcess(c)
         speak(output)
 
@@ -157,11 +105,11 @@ if __name__=="__main__":
             with sr.Microphone() as source:
                 print("Listening...")
                 audio=r.listen(source,timeout=2,phrase_time_limit=5)
-                #timeout:waits for x amount of seconds to speak
+                #timeout:waits for x amount of seconds to speak 
                 #phrase_time_limit: listens for x amount of seconds even we talk more than that
             word=r.recognize_google(audio)
             print(word.lower())
-            if("stop" in word.lower()):
+            if("stop" in word.lower()): #stops listening
                 break
             if("alexa" in word.lower()):
                 speak("yeah")
