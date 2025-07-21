@@ -1,5 +1,5 @@
 .venv/
 __pycache__/
-client.py/
-h.txt/
-temp.mp3/
+client.py
+h.txt
+temp.mp3
