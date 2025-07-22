@@ -14,8 +14,8 @@ This is a simple voice assistant project built using Python.
 - Latest headlines.
 
 ## API's used:
-News API from- https://newsapi.org/ \n
-Google Gemini- https://aistudio.google.com (HuggingFace API's can also be used, but the implementation would be a bit different for that)
+-News API-https://newsapi.org/ 
+-Google Gemini-https://aistudio.google.com (HuggingFace API's can also be used, but the implementation would be a bit different for that)
 
 ## How to run:
 1. Clone the repo
